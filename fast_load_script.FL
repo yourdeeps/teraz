@@ -1,0 +1,23 @@
+LOGON 10.74.161.248/td_user24,td_user24;
+DATABASE TD_BIM_FR_TRNG_DB;
+BEGIN LOADING Employee_316
+ERRORFILES Employee_ET_316, Employee_UV_316
+CHECKPOINT 10;
+SET RECORD VARTEXT ",";
+DEFINE 
+in_EmployeeNo (VARCHAR(10)) ,
+in_FirstName (VARCHAR(30)) , 
+in_LastName (VARCHAR(30)) ,
+in_BirthDate (VARCHAR(10)) , 
+in_JoinedDate (VARCHAR(10)) ,
+in_DepartmentNo (VARCHAR(2)), 
+FILE=emp.txt;
+INSERT INTO Employee_316 VALUES( 
+:in_EmployeeNo , 
+:in_FirstName ,
+:in_LastName , 
+:in_BirthDate (FORMAT 'YYYY-MM-DD'),
+:in_JoinedDate (FORMAT 'YYYY-MM-DD'), 
+:in_DepartmentNo );
+END LOADING;
+LOGOFF;

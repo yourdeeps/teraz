@@ -1,0 +1,58 @@
+.LOGTABLE EMP_STG_LT1;
+ LOGON 10.74.161.248/td_user20,td_user20;
+.BEGIN IMPORT MLOAD
+ TABLES      EMPLOYEE_STG10,EMPLOYEE_STG20
+ WORKTABLES  EMPLOYEE_WT1,EMPLOYEE_WT2
+ ERRORTABLES EMPLOYEE_ET1 EMPLOYEE_UV1,
+ EMPLOYEE1_ET1 EMPLOYEE1_UV1 ;
+
+.LAYOUT EMPLOYEE_STG;
+.FIELD in_EmployeeNo * VARCHAR(10);
+.FIELD in_FirstName * VARCHAR(30);
+.FIELD in_LastName * VARCHAR(30);
+.FIELD in_BirthDate * VARCHAR(10);
+.FIELD in_JoinedDate * VARCHAR(10);
+.FIELD in_DepartmentNo * VARCHAR(02);
+
+ .DML LABEL EMPLOYEE_STG10 ;
+
+ INSERT INTO EMPLOYEE_STG10 VALUES
+ (:in_EmployeeNo,
+  :in_FirstName,
+  :in_Lastname,
+  :in_BirthDate, 
+  :in_JoinedDate,
+  :in_DepartmentNo);
+
+
+ .DML LABEL EMPLOYEE_STG20 ;
+
+ INSERT INTO EMPLOYEE_STG20 VALUES
+ (:in_EmployeeNo,
+  :in_FirstName,
+  :in_Lastname,
+  :in_BirthDate, 
+  :in_JoinedDate,
+  :in_DepartmentNo);
+
+.IMPORT INFILE emp.txt
+
+  LAYOUT EMPLOYEE_STG
+
+  FORMAT VARTEXT ','
+
+  APPLY EMPLOYEE_STG10
+
+  APPLY EMPLOYEE_STG20;
+
+ .END MLOAD;
+
+ .LOGOFF;
+
+
+
+
+
+
+
+4:07 PM 11/9/2018
